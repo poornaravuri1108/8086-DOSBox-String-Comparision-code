@@ -1,0 +1,30 @@
+assume cs:code,ds:data
+data segment
+str1 db "class"
+len equ ($-str1)
+str2 db "class"
+str3 db "Same","$"
+str4 db "Not Same","$"
+data ends
+code segment
+start:
+mov ax,data
+mov ds,ax
+mov es,ax
+mov si,offset str1
+mov di,offset str2
+mov cx,len
+cld
+repz cmpsb
+jnz not_same
+mov dx,offset str3
+jmp down
+not_same:
+mov dx,offset str4
+down:
+mov ah,09h
+int 21h
+mov ah,4ch
+int 21h
+code ends
+end start
